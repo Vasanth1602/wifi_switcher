@@ -3,8 +3,6 @@ import os
 import subprocess
 import sys
 import time
-import winreg
-import socket
 
 # === Configuration ===
 ssid_ip_map = {
@@ -16,8 +14,6 @@ ssid_ip_map = {
 }
 
 interface_name = "Wi-Fi"
-shortcut_name = "WiFiAutoIPSwitcher.lnk"
-
 preferred_dns = "8.8.8.8"
 alternate_dns = "4.2.2.2"
 
@@ -32,54 +28,6 @@ def relaunch_as_admin():
     print("[↑] Requesting Admin privileges...")
     ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, f'"{__file__}"', None, 1)
     sys.exit()
-
-# === Location Services ===
-def is_location_enabled():
-    key_path = r"SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration"
-    try:
-        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, key_path, 0, winreg.KEY_READ) as key:
-            status, _ = winreg.QueryValueEx(key, "Status")
-            return status == 1
-    except PermissionError:
-        print("[ERROR] Cannot access registry. Admin required.")
-        return False
-    except FileNotFoundError:
-        print("[ERROR] Registry key for Location Services not found.")
-        return False
-    except Exception as e:
-        print(f"[ERROR] Unexpected error checking location: {e}")
-        return False
-
-def wait_for_location_enable():
-    while True:
-        if is_location_enabled():
-            print("[✓] Location Services are ON.")
-            return
-        print("[!] Location Services are OFF. Opening settings...")
-        os.system("start ms-settings:privacy-location")
-        input("[PAUSE] Enable Location Services, then press Enter to retry...")
-
-# === Create Desktop Shortcut Once ===
-def create_admin_shortcut():
-    import winshell
-    from win32com.client import Dispatch
-
-    desktop = winshell.desktop()
-    shortcut_path = os.path.join(desktop, shortcut_name)
-    target = sys.executable
-    script = os.path.abspath(__file__)
-
-    if not os.path.exists(shortcut_path):
-        shell = Dispatch('WScript.Shell')
-        shortcut = shell.CreateShortcut(shortcut_path)
-        shortcut.TargetPath = target
-        shortcut.Arguments = f'"{script}"'
-        shortcut.WorkingDirectory = os.path.dirname(script)
-        shortcut.IconLocation = target
-        shortcut.WindowStyle = 7
-        shortcut.Description = "Wi-Fi Auto IP Switcher (Admin)"
-        shortcut.Save()
-        print(f"[✓] Shortcut created: {shortcut_path}")
 
 # === Get Connected SSID ===
 def get_connected_ssid():
@@ -149,9 +97,6 @@ def main():
 
     if not is_admin():
         relaunch_as_admin()
-
-    create_admin_shortcut()
-    wait_for_location_enable()
 
     last_ssid = None
 
