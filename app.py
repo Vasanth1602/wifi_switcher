@@ -219,3 +219,5 @@ def main():
     
 if __name__ == "__main__":
     main()
+# === Flask HTML Template ===
+# Save this as templates/index.html in the same directory as app.py
