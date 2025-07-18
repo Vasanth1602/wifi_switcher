@@ -129,3 +129,92 @@
 2025-07-18 12:24:14,633 - [INFO] Connected to SSID: vivo Y29 5G
 2025-07-18 12:24:14,633 - [INFO] Unknown SSID. Switching to DHCP...
 2025-07-18 12:24:14,762 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 12:27:20,107 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:27:20,107 - [\u2191] Requesting Admin privileges...
+2025-07-18 12:27:22,882 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:27:22,983 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 12:27:22,983 - [33mPress CTRL+C to quit[0m
+2025-07-18 12:27:39,635 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:27:39,649 - [\u2191] Requesting Admin privileges...
+2025-07-18 12:27:42,807 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:27:42,888 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 12:27:42,888 - [33mPress CTRL+C to quit[0m
+2025-07-18 12:31:36,258 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:31:36,261 - [\u2191] Requesting Admin privileges...
+2025-07-18 12:31:38,550 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:31:38,845 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 12:31:38,847 - [33mPress CTRL+C to quit[0m
+2025-07-18 12:31:39,018 - 127.0.0.1 - - [18/Jul/2025 12:31:39] "GET / HTTP/1.1" 200 -
+2025-07-18 12:31:39,130 - 127.0.0.1 - - [18/Jul/2025 12:31:39] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-18 12:31:47,197 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:31:47,199 - [\u2191] Requesting Admin privileges...
+2025-07-18 12:31:49,106 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:31:49,382 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 12:31:49,382 - [33mPress CTRL+C to quit[0m
+2025-07-18 12:31:49,538 - 127.0.0.1 - - [18/Jul/2025 12:31:49] "GET / HTTP/1.1" 200 -
+2025-07-18 12:32:23,059 - [INFO] Configuration saved for SSID ds.
+2025-07-18 12:32:23,059 - 127.0.0.1 - - [18/Jul/2025 12:32:23] "[32mPOST /submit HTTP/1.1[0m" 302 -
+2025-07-18 12:32:23,226 - [INFO] Unknown SSID. Switching to DHCP...
+2025-07-18 12:32:23,359 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 12:32:23,359 - 127.0.0.1 - - [18/Jul/2025 12:32:23] "GET /apply_config HTTP/1.1" 200 -
+2025-07-18 12:32:51,316 - An error occurred when calling message handler
+Traceback (most recent call last):
+  File "C:\Users\vasan\AppData\Local\Programs\Python\Python310\lib\site-packages\pystray\_win32.py", line 412, in _dispatcher
+    return int(icon._message_handlers.get(
+  File "C:\Users\vasan\AppData\Local\Programs\Python\Python310\lib\site-packages\pystray\_win32.py", line 224, in _on_notify
+    descriptors[index - 1](self)
+  File "C:\Users\vasan\AppData\Local\Programs\Python\Python310\lib\site-packages\pystray\_base.py", line 328, in inner
+    callback(self)
+  File "C:\Users\vasan\AppData\Local\Programs\Python\Python310\lib\site-packages\pystray\_base.py", line 453, in __call__
+    return self._action(icon, self)
+  File "V:\PlayGround\wifi_switcher\app.py", line 190, in show_logs
+    messagebox.showinfo("Log File", logs)
+NameError: name 'messagebox' is not defined
+2025-07-18 12:32:56,967 - [INFO] Application Quit.
+2025-07-18 12:33:25,944 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:33:25,944 - [\u2191] Requesting Admin privileges...
+2025-07-18 12:33:27,730 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:33:28,017 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 12:33:28,017 - [33mPress CTRL+C to quit[0m
+2025-07-18 12:33:28,104 - 127.0.0.1 - - [18/Jul/2025 12:33:28] "GET / HTTP/1.1" 200 -
+2025-07-18 12:33:36,307 - [INFO] Configuration saved for SSID dfsa.
+2025-07-18 12:33:36,309 - 127.0.0.1 - - [18/Jul/2025 12:33:36] "[32mPOST /submit HTTP/1.1[0m" 302 -
+2025-07-18 12:33:36,463 - [INFO] Unknown SSID. Switching to DHCP...
+2025-07-18 12:33:36,597 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 12:33:36,598 - 127.0.0.1 - - [18/Jul/2025 12:33:36] "GET /apply_config HTTP/1.1" 200 -
+2025-07-18 12:35:45,956 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:35:45,958 - [\u2191] Requesting Admin privileges...
+2025-07-18 12:35:48,065 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:35:48,353 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 12:35:48,353 - [33mPress CTRL+C to quit[0m
+2025-07-18 12:35:48,428 - 127.0.0.1 - - [18/Jul/2025 12:35:48] "GET / HTTP/1.1" 200 -
+2025-07-18 12:35:56,498 - [INFO] Configuration saved for SSID df.
+2025-07-18 12:35:56,499 - 127.0.0.1 - - [18/Jul/2025 12:35:56] "[32mPOST /submit HTTP/1.1[0m" 302 -
+2025-07-18 12:35:56,633 - [INFO] Unknown SSID. Switching to DHCP...
+2025-07-18 12:35:56,771 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 12:35:56,771 - 127.0.0.1 - - [18/Jul/2025 12:35:56] "GET /apply_config HTTP/1.1" 200 -
+2025-07-18 12:36:32,439 - [INFO] Application Quit.
+2025-07-18 12:36:38,382 - [INFO] Application Quit.
+2025-07-18 12:38:07,434 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:38:07,436 - [\u2191] Requesting Admin privileges...
+2025-07-18 12:38:09,056 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:38:09,203 - [INFO] Unknown SSID. Switching to DHCP...
+2025-07-18 12:38:09,327 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 12:38:18,689 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:38:18,689 - [\u2191] Requesting Admin privileges...
+2025-07-18 12:38:20,382 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 12:38:20,662 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 12:38:20,662 - [33mPress CTRL+C to quit[0m
+2025-07-18 12:38:20,802 - 127.0.0.1 - - [18/Jul/2025 12:38:20] "GET / HTTP/1.1" 200 -
+2025-07-18 12:38:28,777 - [INFO] Configuration saved for SSID f.
+2025-07-18 12:38:28,777 - 127.0.0.1 - - [18/Jul/2025 12:38:28] "[32mPOST /submit HTTP/1.1[0m" 302 -
+2025-07-18 12:38:28,933 - [INFO] Unknown SSID. Switching to DHCP...
+2025-07-18 12:38:29,068 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 12:38:29,069 - 127.0.0.1 - - [18/Jul/2025 12:38:29] "GET /apply_config HTTP/1.1" 200 -
