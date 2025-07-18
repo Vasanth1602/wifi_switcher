@@ -1,9 +1,9 @@
 {
-    "periyar_univ": {
-        "ip": "172.16.36.41",
-        "subnet": "255.255.0.0",
-        "gateway": "172.16.1.1",
-        "preferred_dns": "8.8.8.8",
-        "alternate_dns": "4.2.2.2"
+    "dsf": {
+        "ip": "dsf",
+        "subnet": "ds",
+        "gateway": "sdfs",
+        "preferred_dns": "dfsf",
+        "alternate_dns": "sdfds"
     }
 }

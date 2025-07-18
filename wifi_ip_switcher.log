@@ -218,3 +218,129 @@ NameError: name 'messagebox' is not defined
 2025-07-18 12:38:28,933 - [INFO] Unknown SSID. Switching to DHCP...
 2025-07-18 12:38:29,068 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
 2025-07-18 12:38:29,069 - 127.0.0.1 - - [18/Jul/2025 12:38:29] "GET /apply_config HTTP/1.1" 200 -
+2025-07-18 15:35:16,789 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:35:16,789 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:35:18,121 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:35:18,267 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 15:35:18,267 - [33mPress CTRL+C to quit[0m
+2025-07-18 15:35:18,305 - 127.0.0.1 - - [18/Jul/2025 15:35:18] "GET / HTTP/1.1" 200 -
+2025-07-18 15:35:26,368 - [INFO] Configuration saved for SSID sfas.
+2025-07-18 15:35:26,368 - 127.0.0.1 - - [18/Jul/2025 15:35:26] "[32mPOST /submit HTTP/1.1[0m" 302 -
+2025-07-18 15:35:26,447 - [INFO] Unknown SSID. Switching to DHCP...
+2025-07-18 15:35:26,515 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:35:26,515 - 127.0.0.1 - - [18/Jul/2025 15:35:26] "GET /apply_config HTTP/1.1" 200 -
+2025-07-18 15:39:20,156 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:39:20,156 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:39:21,253 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:39:21,334 - [INFO] Unknown SSID. Switching to DHCP...
+2025-07-18 15:39:21,392 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:39:28,987 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:39:28,987 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:39:30,282 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:39:30,362 - [INFO] Unknown SSID. Switching to DHCP...
+2025-07-18 15:39:30,425 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:39:46,234 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:39:46,234 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:39:48,416 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:39:48,418 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:39:50,778 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:39:50,778 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:39:51,981 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:39:52,054 - [INFO] Unknown SSID. Switching to DHCP...
+2025-07-18 15:39:52,115 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:40:11,800 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:40:11,801 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:40:13,385 - === Wi-Fi Auto IP Switcher Running ===
+2025-07-18 15:40:13,455 - [INFO] Unknown SSID. Switching to DHCP...
+2025-07-18 15:40:13,520 - [ERROR] Failed to set DHCP: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:40:30,658 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:40:30,658 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:40:31,705 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:40:31,736 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 15:40:31,736 - [33mPress CTRL+C to quit[0m
+2025-07-18 15:40:31,778 - [INFO] Connected SSID: vivo Y29 5G
+2025-07-18 15:40:31,847 - [ERROR] DHCP failed: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:40:40,701 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:40:40,711 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:40:42,413 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:40:42,434 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 15:40:42,434 - [33mPress CTRL+C to quit[0m
+2025-07-18 15:40:42,484 - [INFO] Connected SSID: vivo Y29 5G
+2025-07-18 15:40:42,546 - [ERROR] DHCP failed: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:43:34,941 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:43:34,941 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:43:36,032 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:43:36,064 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 15:43:36,064 - [33mPress CTRL+C to quit[0m
+2025-07-18 15:43:36,116 - [INFO] Connected SSID: vivo Y29 5G
+2025-07-18 15:43:36,178 - [ERROR] DHCP failed: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:43:42,571 - 127.0.0.1 - - [18/Jul/2025 15:43:42] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-18 15:43:42,579 - 127.0.0.1 - - [18/Jul/2025 15:43:42] "GET /apply_config HTTP/1.1" 200 -
+2025-07-18 15:43:51,093 - 127.0.0.1 - - [18/Jul/2025 15:43:51] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-18 15:43:51,097 - 127.0.0.1 - - [18/Jul/2025 15:43:51] "GET /apply_config HTTP/1.1" 200 -
+2025-07-18 15:47:21,876 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:47:21,877 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:47:23,340 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:47:23,366 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 15:47:23,366 - [33mPress CTRL+C to quit[0m
+2025-07-18 15:47:23,411 - [INFO] Connected SSID: vivo Y29 5G
+2025-07-18 15:47:23,473 - [ERROR] DHCP failed: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:47:29,516 - [INFO] Application quit.
+2025-07-18 15:47:30,928 - [INFO] Application quit.
+2025-07-18 15:47:33,087 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:47:33,087 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:47:34,864 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:47:34,893 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 15:47:34,893 - [33mPress CTRL+C to quit[0m
+2025-07-18 15:47:34,938 - [INFO] Connected SSID: vivo Y29 5G
+2025-07-18 15:47:35,002 - [ERROR] DHCP failed: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:47:39,313 - 127.0.0.1 - - [18/Jul/2025 15:47:39] "GET / HTTP/1.1" 200 -
+2025-07-18 15:47:54,174 - [INFO] Config saved for SSID: dsfas
+2025-07-18 15:47:54,174 - 127.0.0.1 - - [18/Jul/2025 15:47:54] "[32mPOST /submit HTTP/1.1[0m" 302 -
+2025-07-18 15:47:54,176 - 127.0.0.1 - - [18/Jul/2025 15:47:54] "GET /apply_config HTTP/1.1" 200 -
+2025-07-18 15:51:06,494 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:51:06,495 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:51:08,215 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:51:08,242 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 15:51:08,242 - [33mPress CTRL+C to quit[0m
+2025-07-18 15:51:08,287 - [INFO] Connected SSID: vivo Y29 5G
+2025-07-18 15:51:08,350 - [ERROR] DHCP failed: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:51:12,269 - [INFO] Application quit.
+2025-07-18 15:51:13,737 - [INFO] Application quit.
+2025-07-18 15:51:15,103 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:51:15,103 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:51:16,726 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:51:16,751 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 15:51:16,751 - [33mPress CTRL+C to quit[0m
+2025-07-18 15:51:16,790 - [INFO] Connected SSID: vivo Y29 5G
+2025-07-18 15:51:16,859 - [ERROR] DHCP failed: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:51:19,501 - 127.0.0.1 - - [18/Jul/2025 15:51:19] "GET / HTTP/1.1" 200 -
+2025-07-18 15:52:50,661 - [INFO] Config saved (overwritten) for SSID: dsf
+2025-07-18 15:52:50,661 - 127.0.0.1 - - [18/Jul/2025 15:52:50] "[32mPOST /submit HTTP/1.1[0m" 302 -
+2025-07-18 15:52:50,666 - 127.0.0.1 - - [18/Jul/2025 15:52:50] "GET /apply_config HTTP/1.1" 200 -
+2025-07-18 15:56:58,325 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:56:58,327 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:56:59,677 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:56:59,703 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 15:56:59,703 - [33mPress CTRL+C to quit[0m
+2025-07-18 15:56:59,746 - [INFO] Connected SSID: vivo Y29 5G
+2025-07-18 15:56:59,810 - [ERROR] DHCP failed: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
+2025-07-18 15:57:04,313 - [INFO] Application quit.
+2025-07-18 15:57:07,323 - [INFO] Application quit.
+2025-07-18 15:57:08,764 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:57:08,765 - [\u2191] Requesting Admin privileges...
+2025-07-18 15:57:09,947 - === Wi-Fi Auto IP Switcher Started ===
+2025-07-18 15:57:09,973 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-18 15:57:09,974 - [33mPress CTRL+C to quit[0m
+2025-07-18 15:57:10,017 - [INFO] Connected SSID: vivo Y29 5G
+2025-07-18 15:57:10,082 - [ERROR] DHCP failed: Command '['netsh', 'interface', 'ip', 'set', 'address', 'Wi-Fi', 'dhcp']' returned non-zero exit status 1.
