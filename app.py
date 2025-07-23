@@ -13,7 +13,8 @@ from PIL import Image, ImageDraw # Keep Image for potential fallback or future u
 import idlelib.tree # Explicitly import for PyInstaller
 
 # === Constants ===
-interface_name = "Wi-Fi"
+
+
 config_file = "wifi_ip_config.json"
 log_file = "wifi_ip_switcher.log"
 check_interval = 5  # seconds between SSID checks
@@ -56,6 +57,9 @@ def relaunch_as_admin():
         messagebox.showerror("Error", f"Failed to get admin privileges. Please run as administrator. Error: {e}")
     sys.exit() # Exit the current non-admin process
 
+
+
+
 # === IP Functions ===
 def run_netsh_command(command_args):
     """Helper to run netsh commands and suppress console window."""
@@ -74,6 +78,24 @@ def run_netsh_command(command_args):
     except Exception as e:
         logging.error(f"An unexpected error occurred running netsh: {e}")
         return None
+
+# === Wi-Fi Interface Detection ===
+def get_wifi_interface_name():
+    """Dynamically retrieves the name of the active Wi-Fi interface."""
+    output = run_netsh_command(["netsh", "wlan", "show", "interfaces"])
+    if output:
+        for line in output.splitlines():
+            if "Name" in line:
+                parts = line.split(":", 1)
+                if len(parts) == 2:
+                    name = parts[1].strip()
+                    logging.info(f"[INTERFACE] Detected Wi-Fi interface name: {name}")
+                    return name
+    logging.warning("[INTERFACE] Could not detect Wi-Fi interface name. Defaulting to 'Wi-Fi'")
+    return "Wi-Fi"
+interface_name = get_wifi_interface_name()
+
+
 
 def get_connected_ssid():
     output = run_netsh_command(["netsh", "wlan", "show", "interfaces"])
