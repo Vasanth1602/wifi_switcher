@@ -241,7 +241,7 @@ import webbrowser
 import threading
 from flask import Flask, render_template, request, redirect, url_for
 from pystray import Icon, MenuItem, Menu
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw # Keep Image for potential fallback or future use, but not ImageDraw for .ico
 import tkinter.messagebox as messagebox
 
 # === Constants ===
@@ -249,6 +249,7 @@ interface_name = "Wi-Fi"
 config_file = "wifi_ip_config.json"
 log_file = "wifi_ip_switcher.log"
 check_interval = 5  # seconds between SSID checks
+icon_path = "wifi_ip_switcher.ico" # Define your icon path here
 
 # === Logging Setup ===
 logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(message)s')
@@ -265,17 +266,13 @@ def is_admin():
 
 def relaunch_as_admin():
     logging.info("[↑] Requesting Admin privileges...")
-    # Pass command line arguments, and use sys.argv[0] instead of __file__ for safety
     params = " ".join(f'"{arg}"' for arg in sys.argv[1:])
-    # Using CREATE_NO_WINDOW for ShellExecuteW as well, though it's typically for admin prompt, not the spawned window.
-    # The important part for flickering is CREATE_NO_WINDOW in subprocess.run/check_output.
     ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, f'"{sys.argv[0]}" {params}', None, 1)
     sys.exit()
 
 # === IP Functions ===
 def get_connected_ssid():
     try:
-        # Corrected: Added creationflags=subprocess.CREATE_NO_WINDOW
         output = subprocess.check_output(["netsh", "wlan", "show", "interfaces"],
                                          text=True,
                                          creationflags=subprocess.CREATE_NO_WINDOW)
@@ -289,7 +286,6 @@ def get_connected_ssid():
 
 def get_current_ip(interface):
     try:
-        # Corrected: Added creationflags=subprocess.CREATE_NO_WINDOW
         output = subprocess.check_output(["netsh", "interface", "ip", "show", "config", f"name={interface}"],
                                          text=True,
                                          creationflags=subprocess.CREATE_NO_WINDOW)
@@ -303,24 +299,22 @@ def get_current_ip(interface):
 
 def set_static_ip(interface, ip, subnet, gateway, preferred_dns, alternate_dns):
     try:
-        # These already had creationflags, which is good
         subprocess.run(["netsh", "interface", "ip", "set", "address", interface, "static", ip, subnet, gateway],
-                       check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+                        check=True, creationflags=subprocess.CREATE_NO_WINDOW)
         subprocess.run(["netsh", "interface", "ip", "set", "dns", interface, "static", preferred_dns, "primary"],
-                       check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+                        check=True, creationflags=subprocess.CREATE_NO_WINDOW)
         subprocess.run(["netsh", "interface", "ip", "add", "dns", interface, alternate_dns, "index=2"],
-                       check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+                        check=True, creationflags=subprocess.CREATE_NO_WINDOW)
         logging.info(f"[✓] Static IP set for {interface}: {ip}")
     except subprocess.CalledProcessError as e:
         logging.error(f"[ERROR] Static IP failed: {e}")
 
 def set_dhcp_ip(interface):
     try:
-        # These already had creationflags, which is good
         subprocess.run(["netsh", "interface", "ip", "set", "address", interface, "dhcp"],
-                       check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+                        check=True, creationflags=subprocess.CREATE_NO_WINDOW)
         subprocess.run(["netsh", "interface", "ip", "set", "dns", interface, "dhcp"],
-                       check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+                        check=True, creationflags=subprocess.CREATE_NO_WINDOW)
         logging.info("[✓] Switched to DHCP")
     except subprocess.CalledProcessError as e:
         logging.error(f"[ERROR] DHCP failed: {e}")
@@ -392,7 +386,6 @@ def submit_config():
 
     if all([ssid, ip, subnet, gateway, preferred_dns, alternate_dns]):
         config = load_or_create_config()
-        # Overwrite the config for the SSID (if it exists)
         config[ssid] = {
             "ip": ip,
             "subnet": subnet,
@@ -412,28 +405,36 @@ def apply_config():
 
 # === Web and Tray ===
 def start_flask_app():
-    # Use 0.0.0.0 to make it accessible from other devices on the network (if firewall allows)
-    # or just 127.0.0.1 for local access only. Sticking to 127.0.0.1 for security.
     app.run(host='127.0.0.1', port=5000, debug=False, use_reloader=False)
 
 def open_browser():
     webbrowser.open("http://127.0.0.1:5000/")
 
 def start_tray_icon():
-    # Create a simple icon (you could replace this with a .ico file for better quality)
-    icon_img = Image.new("RGB", (64, 64), (0, 102, 204)) # Blue background
-    draw = ImageDraw.Draw(icon_img)
-    draw.text((10, 20), "IP", fill="white", font=Image.core.getfont("arial.ttf", 30)) # Larger font for visibility
+    # Load the icon from the .ico file
+    try:
+        # For pystray, you should load the image using PIL's Image.open
+        icon_img = Image.open(icon_path)
+    except FileNotFoundError:
+        logging.error(f"[ERROR] Icon file not found at {icon_path}. Using a default image.")
+        # Fallback to a generated icon if the .ico file isn't found
+        icon_img = Image.new("RGB", (64, 64), (0, 102, 204)) # Blue background
+        draw = ImageDraw.Draw(icon_img)
+        draw.text((10, 20), "IP", fill="white", font=Image.core.getfont("arial.ttf", 30))
+    except Exception as e:
+        logging.error(f"[ERROR] Failed to load icon from {icon_path}: {e}. Using a default image.")
+        icon_img = Image.new("RGB", (64, 64), (0, 102, 204)) # Blue background
+        draw = ImageDraw.Draw(icon_img)
+        draw.text((10, 20), "IP", fill="white", font=Image.core.getfont("arial.ttf", 30))
+
 
     def show_logs(icon, item):
         try:
-            # This is intended to open a visible window
             subprocess.Popen(["notepad", log_file])
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open logs in Notepad: {e}")
 
     def open_change_ip_page(icon, item):
-        # Delete the config file when "Change IP" is clicked
         if os.path.exists(config_file):
             try:
                 os.remove(config_file)
@@ -442,13 +443,12 @@ def start_tray_icon():
                 logging.error(f"[ERROR] Failed to delete config file: {e}")
                 messagebox.showerror("Error", f"Failed to delete config file: {e}")
 
-        # Open the config page for the user to enter a new configuration
         webbrowser.open("http://127.0.0.1:5000/")
 
     def on_quit(icon, item):
         logging.info("[INFO] Application quit initiated.")
-        icon.stop() # Stop pystray icon
-        os._exit(0) # Force exit all threads
+        icon.stop()
+        os._exit(0)
 
     menu = Menu(
         MenuItem("View Log", show_logs),
@@ -465,39 +465,30 @@ def main():
     if not is_admin():
         relaunch_as_admin()
 
-    # Start tray icon in a non-daemon thread so it stays alive
     tray_thread = threading.Thread(target=start_tray_icon)
-    tray_thread.daemon = False # Essential for the thread to outlive the main thread
+    tray_thread.daemon = False
     tray_thread.start()
 
-    # Start SSID monitoring thread, also non-daemon
     monitor_thread = threading.Thread(target=monitor_ssid_loop)
-    monitor_thread.daemon = False # Essential for the thread to outlive the main thread
+    monitor_thread.daemon = False
     monitor_thread.start()
 
-    # Always start Flask app in a thread so it doesn't block
     flask_thread = threading.Thread(target=start_flask_app)
-    flask_thread.daemon = False # Essential for the thread to outlive the main thread
+    flask_thread.daemon = False
     flask_thread.start()
 
-    # Open browser only once, when config is missing
     if not os.path.exists(config_file):
         logging.info("[INFO] Config file not found, opening browser for initial setup.")
         open_browser()
     else:
         logging.info("[INFO] Config file found. Application running in background.")
 
-    # Keep main thread alive by joining threads (or infinite loop)
-    # Joining non-daemon threads will keep the main process alive until they finish.
-    # Since these are meant to run indefinitely, the main thread will effectively wait here.
     try:
         tray_thread.join()
         monitor_thread.join()
         flask_thread.join()
     except KeyboardInterrupt:
         logging.info("[INFO] KeyboardInterrupt detected, attempting graceful shutdown.")
-        # pystray's icon.stop() and os._exit(0) in on_quit() are the primary shutdown mechanisms.
-        # This block is more for interactive testing outside of the .exe.
         pass
 
 if __name__ == "__main__":
