@@ -1,2 +1,7 @@
 ./wifi_ip_config.json
 ./wifi_ip_switcher.log
+./build/
+./dist/
+./app.spec
+./app copy.py
+./.gitignore
