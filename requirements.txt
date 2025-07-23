@@ -1,0 +1,4 @@
+flask>=2.0
+pystray>=0.19
+pillow>=8.0
+pyinstaller>=5.0
