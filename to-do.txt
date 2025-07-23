@@ -7,6 +7,6 @@
         "subnet": "255.255.0.0",
         "gateway": "172.16.1.1",
         "preferred_dns": "8.8.8.8",
-        "alternate_dns": "4.2.2.2"
+        "alternate_dns": "4.2.2.4"
     }
 }
