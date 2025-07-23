@@ -4,4 +4,3 @@
 ./dist/
 ./app.spec
 ./app copy.py
-./.gitignore
