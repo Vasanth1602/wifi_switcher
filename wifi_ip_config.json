@@ -1,9 +1,0 @@
-{
-    "periyar_univ_2": {
-        "ip": "172.122.12.2",
-        "subnet": "171.25.255.252",
-        "gateway": "255.255.2.2",
-        "preferred_dns": "8.8.8.8",
-        "alternate_dns": "2.2.2.2"
-    }
-}
