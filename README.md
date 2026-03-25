@@ -172,7 +172,7 @@ Requires PyInstaller (install from `requirements-dev.txt`):
 ```bash
 pip install -r requirements-dev.txt
 
-pyinstaller --windowed --icon=wifi_ip_switcher.ico --add-data "templates;templates" --name app app.py
+pyinstaller --windowed --icon=wifi_ip_switcher.ico --add-data "templates;templates" --add-data "wifi_ip_switcher.ico;." --name app app.py
 # Output: dist/app/   (folder with all files — used by the Inno Setup installer)
 ```
 
@@ -199,7 +199,7 @@ The installer handles file placement, Task Scheduler registration, and Start Men
 | Config UI | Flask dev server on `localhost:5000`, HTML templates |
 | Config storage | JSON file with atomic read/write to prevent corruption |
 | Logging | Python `logging` module — rotating file handler |
-| Packaging | PyInstaller `--onefile --windowed` + Inno Setup `.iss` script |
+| Packaging | PyInstaller `--onedir --windowed` + Inno Setup `.iss` script |
 
 ---
 
@@ -208,6 +208,8 @@ The installer handles file placement, Task Scheduler registration, and Start Men
 - **Windows only** — uses `netsh` commands which are Windows-specific
 - **Admin required** — network adapter changes require elevated privileges
 - **Single adapter** — monitors the primary Wi-Fi adapter only
+- **Location Indicator Flashing** — Windows 10/11 treats `netsh wlan show interfaces` as location data because it reads the router MAC address (BSSID). The Windows location icon will flash every 5 seconds (or whatever `check_interval` is set to). Alternative APIs like `Get-NetConnectionProfile` were tested but rejected because they return Windows-generated profile names (e.g. `"SSID 2"`) or `"Unidentified network"`, rather than the true SSID.
+- **Cold Boot Delay** — When powering on from a full shutdown, there is an unavoidable delay before IP switching works. The timeline is: Windows boot (~30-60s) + Login time + Task Scheduler startup + wait for Wi-Fi stack to be ready. It takes roughly **70–100 seconds from pressing the power button** until the app is fully running and able to switch IPs.
 - **Polling-based** — checks SSID on an interval rather than on connection events
 
 ---
@@ -216,9 +218,3 @@ The installer handles file placement, Task Scheduler registration, and Start Men
 
 - [ML Deployment Platform](https://github.com/Vasanth1602/ML-Deployment-Platform) — full-stack MLOps platform with AWS, Docker, and Terraform
 - [Jenkins CI/CD Pipeline](https://github.com/Vasanth1602/jenkins_workflow) — automated build, test, and deploy pipeline
-
----
-
-## License
-
-MIT — see [LICENSE](LICENSE) for details.
