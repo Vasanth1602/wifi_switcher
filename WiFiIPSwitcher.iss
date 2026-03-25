@@ -3,11 +3,11 @@
 
 #define MyAppName "Wi-Fi IP Switcher"
 #define MyAppVersion "1.0"
-#define MyAppPublisher "Arun Kumar" ; Replace with your name/company
-#define MyAppURL "http://127.0.0.1:5000/" ; Optional: Your app's web interface URL
+#define MyAppPublisher "Vasanth"
+#define MyAppURL "https://github.com/Vasanth1602/wifi_switcher"
 #define MyAppExeName "app.exe"
-#define MyAppIcon "V:\PlayGround\wifi_switcher\wifi_ip_switcher.ico" ; Path to your installer's icon
-#define MyPyInstallerOutput "V:\PlayGround\wifi_switcher\dist\app" ; Path to your PyInstaller output folder
+#define MyAppIcon "V:\PlayGround\wifi_switcher\wifi_ip_switcher.ico"
+#define MyPyInstallerOutput "V:\PlayGround\wifi_switcher\dist\app"
 
 [Setup]
 ; Basic Setup Information
@@ -21,17 +21,17 @@ AppUpdatesURL={#MyAppURL}
 ; Default Installation Directory
 ; {autopf} expands to "C:\Program Files" or "C:\Program Files (x86)"
 DefaultDirName={autopf}\{#MyAppName}
-DefaultGroupName={#MyAppName} ; Name for the Start Menu folder
-AllowNoIcons=yes ; Allow installation without creating any shortcuts
-UninstallDisplayIcon={app}\{#MyAppExeName} ; Icon for the uninstaller in Add/Remove Programs
+DefaultGroupName={#MyAppName}
+AllowNoIcons=yes
+UninstallDisplayIcon={app}\{#MyAppExeName}
 
 ; Output Settings for the Installer Executable
-OutputBaseFilename=WiFiIPSwitcher_Setup ; Name of the generated installer executable
-OutputDir=V:\PlayGround\wifi_switcher\installer ; Directory where the installer will be saved
-Compression=lzma ; Good compression algorithm
-SolidCompression=yes ; Further improves compression
-WizardStyle=modern ; Modern wizard look
-SetupIconFile={#MyAppIcon} ; Icon for the installer executable itself
+OutputBaseFilename=WiFiIPSwitcher_Setup
+OutputDir=V:\PlayGround\wifi_switcher\installer
+Compression=lzma
+SolidCompression=yes
+WizardStyle=modern
+SetupIconFile={#MyAppIcon}
 
 ; --- CRITICAL: Require Administrator Privileges for the Installer ---
 ; This ensures the installer can copy files to Program Files and manage Scheduled Tasks.
@@ -55,11 +55,11 @@ Source: "{#MyPyInstallerOutput}\*"; DestDir: "{app}"; Flags: ignoreversion recur
 ; Source: "V:\PlayGround\wifi_switcher\wifi_ip_config.json"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-; Create a Start Menu shortcut
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\wifi_ip_switcher.ico"
+; Start Menu shortcut — icon is embedded inside app.exe by PyInstaller (--icon flag)
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\{#MyAppExeName}"
 
-; Create a Desktop shortcut (if the user selected the task)
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\wifi_ip_switcher.ico"
+; Desktop shortcut (if the user selected the task)
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\{#MyAppExeName}"
 
 [Run]
 ; --- CRITICAL: Launch the application after successful installation ---
@@ -72,9 +72,14 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#MyAppName}}"; Flags: postinstall nowait runasoriginaluser
 
 [UninstallRun]
-; --- CRITICAL: Delete the scheduled task during uninstallation ---
-; This command will run with administrator privileges (inherited from the uninstaller).
-; schtasks.exe: Windows command-line utility for managing scheduled tasks.
-; /delete /tn WiFiIPSwitcherStartupTask /f: Deletes the task named "WiFiIPSwitcherStartupTask" forcefully.
-; Flags: runhidden: Runs the command silently without showing a command prompt window.
+; Step 1: Kill the running app process first (removes tray icon immediately)
+; /f = force kill, /im = by image name, /t = also kill child processes
+; exitcode 128 means process wasn't running — that's fine, so we don't fail on it
+Filename: "taskkill.exe"; Parameters: "/f /im {#MyAppExeName} /t"; Flags: runhidden; RunOnceId: "KillApp"
+
+; Step 2: Delete the Scheduled Task so it doesn't fire on next login
 Filename: "schtasks.exe"; Parameters: "/delete /tn WiFiIPSwitcherStartupTask /f"; Flags: runhidden; StatusMsg: "Removing startup task...";
+
+[UninstallDelete]
+; Remove the user's config and log files from AppData on uninstall
+Type: filesandordirs; Name: "{localappdata}\WiFi_IP_Switcher"

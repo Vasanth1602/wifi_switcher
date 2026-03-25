@@ -5,69 +5,408 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wi-Fi IP Switcher</title>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+            background: #f0f2f5;
+            padding: 32px 16px;
+            color: #1a1a1a;
         }
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h2 {
+
+        .page-title {
             text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 28px;
+            color: #0066cc;
         }
-        label {
-            font-weight: bold;
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 24px;
+            max-width: 680px;
+            margin: 0 auto 24px auto;
         }
-        input[type="text"], input[type="submit"] {
+
+        .card h2 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #333;
+            border-bottom: 2px solid #e8e8e8;
+            padding-bottom: 10px;
+        }
+
+        /* ── Success banner ── */
+        .success-banner {
+            background: #e6ffed;
+            border: 1px solid #52c41a;
+            border-radius: 8px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 680px;
+            margin: 0 auto 20px auto;
+            font-size: 14px;
+            color: #237804;
+            font-weight: 600;
+        }
+
+        .success-banner .check {
+            width: 20px;
+            height: 20px;
+            background: #52c41a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .success-banner .check::after {
+            content: '';
+            width: 5px;
+            height: 9px;
+            border: 2px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg) translateY(-1px);
+            display: block;
+        }
+
+        /* ── Saved profiles table ── */
+        .empty-state {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            padding: 20px 0;
+        }
+
+        table {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead tr {
+            background: #f5f7fa;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 12px;
+            font-weight: 700;
+            color: #555;
+            border-bottom: 2px solid #e8e8e8;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+            word-break: break-all;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #fafafa; }
+
+        .ssid-badge {
+            background: #e6f0ff;
+            color: #0050b3;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-weight: 700;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .btn-delete {
+            background: none;
+            border: 1px solid #ff4d4f;
+            color: #ff4d4f;
             border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
+            padding: 4px 12px;
+            font-size: 12px;
             cursor: pointer;
+            white-space: nowrap;
         }
-        input[type="submit"]:hover {
-            background-color: #45a049;
+
+        .btn-delete:hover {
+            background: #fff1f0;
+        }
+
+        /* ── Add / Edit form ── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .required-star { color: #ff4d4f; margin-left: 2px; }
+
+        input[type="text"] {
+            padding: 9px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 2px rgba(0,102,204,0.15);
+        }
+
+        input[type="text"].invalid {
+            border-color: #ff4d4f;
+        }
+
+        .hint {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .error-msg {
+            font-size: 11px;
+            color: #ff4d4f;
+            display: none;
+        }
+
+        .btn-submit {
+            grid-column: 1 / -1;
+            background: #0066cc;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 11px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover { background: #0052a3; }
+
+        .optional-tag {
+            font-size: 11px;
+            color: #aaa;
+            font-weight: 400;
+            margin-left: 4px;
+        }
+
+        @media (max-width: 500px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .btn-submit { grid-column: 1; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Wi-Fi IP Configuration</h2>
-    <form action="/submit" method="POST">
-        <label for="ssid">SSID:</label>
-        <input type="text" id="ssid" name="ssid" required>
+<div class="page-title">Wi-Fi IP Switcher</div>
 
-        <label for="ip">IP Address:</label>
-        <input type="text" id="ip" name="ip" required>
+{# ── Success banner — only shown after a save ── #}
+{# The ?saved=1 query param is set by the Flask submit route on success  #}
+{% if saved %}
+<div class="success-banner">
+    <div class="check"></div>
+    Configuration saved successfully. It will be applied automatically when connected to that network.
+</div>
+{% endif %}
 
-        <label for="subnet">Subnet Mask:</label>
-        <input type="text" id="subnet" name="subnet" required>
+{# ── Saved profiles card ── #}
+<div class="card">
+    <h2>Saved Profiles</h2>
 
-        <label for="gateway">Gateway:</label>
-        <input type="text" id="gateway" name="gateway" required>
+    {% if existing_config %}
+        <table>
+            <thead>
+                <tr>
+                    <th>SSID</th>
+                    <th>IP Address</th>
+                    <th>Subnet</th>
+                    <th>Gateway</th>
+                    <th>DNS</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ssid, cfg in existing_config.items() %}
+                <tr>
+                    <td><span class="ssid-badge">{{ ssid }}</span></td>
+                    <td>{{ cfg.ip }}</td>
+                    <td>{{ cfg.subnet }}</td>
+                    <td>{{ cfg.gateway }}</td>
+                    <td>
+                        {{ cfg.preferred_dns }}
+                        {% if cfg.alternate_dns %}
+                            <br><span style="color:#999">{{ cfg.alternate_dns }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {# Delete this profile — POSTs SSID name to /delete route #}
+                        <form method="POST" action="/delete"
+                              onsubmit="return confirm('Delete profile for {{ ssid }}?')">
+                            <input type="hidden" name="ssid" value="{{ ssid }}">
+                            <button type="submit" class="btn-delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="empty-state">No profiles saved yet. Add one below.</p>
+    {% endif %}
+</div>
 
-        <label for="preferred_dns">Preferred DNS:</label>
-        <input type="text" id="preferred_dns" name="preferred_dns" required>
+{# ── Add / Edit profile form ── #}
+<div class="card">
+    <h2>Add / Update Profile</h2>
 
-        <label for="alternate_dns">Alternate DNS:</label>
-        <input type="text" id="alternate_dns" name="alternate_dns" required>
+    <form method="POST" action="/submit" id="ip-form">
+        <div class="form-grid">
 
-        <input type="submit" value="Save Configuration">
+            <div class="form-group full-width">
+                <label for="ssid">SSID <span class="required-star">*</span></label>
+                <input type="text" id="ssid" name="ssid"
+                       placeholder="e.g. periyar_univ" required>
+                <span class="hint">Exact name — case sensitive. Must match your Wi-Fi network name.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="ip">IP Address <span class="required-star">*</span></label>
+                <input type="text" id="ip" name="ip"
+                       placeholder="e.g. 172.16.36.41">
+                <span class="error-msg" id="ip-err">Enter a valid IP (e.g. 192.168.1.10)</span>
+            </div>
+
+            <div class="form-group">
+                <label for="subnet">Subnet Mask <span class="required-star">*</span></label>
+                <input type="text" id="subnet" name="subnet"
+                       placeholder="e.g. 255.255.0.0">
+                <span class="error-msg" id="subnet-err">Enter a valid subnet mask</span>
+            </div>
+
+            <div class="form-group">
+                <label for="gateway">Gateway <span class="required-star">*</span></label>
+                <input type="text" id="gateway" name="gateway"
+                       placeholder="e.g. 172.16.1.1">
+                <span class="error-msg" id="gateway-err">Enter a valid gateway IP</span>
+            </div>
+
+            <div class="form-group">
+                <label for="preferred_dns">Preferred DNS <span class="required-star">*</span></label>
+                <input type="text" id="preferred_dns" name="preferred_dns"
+                       placeholder="e.g. 8.8.8.8">
+                <span class="error-msg" id="dns1-err">Enter a valid DNS IP</span>
+            </div>
+
+            <div class="form-group">
+                <label for="alternate_dns">
+                    Alternate DNS
+                    <span class="optional-tag">(optional)</span>
+                </label>
+                <input type="text" id="alternate_dns" name="alternate_dns"
+                       placeholder="e.g. 4.2.2.4">
+                <span class="error-msg" id="dns2-err">Enter a valid DNS IP or leave blank</span>
+            </div>
+
+            <button type="submit" class="btn-submit">Save Configuration</button>
+
+        </div>
     </form>
 </div>
+
+<script>
+    // Validates a string as a dotted-quad IPv4 address
+    function isValidIP(val) {
+        if (!val) return false;
+        var parts = val.split('.');
+        if (parts.length !== 4) return false;
+        return parts.every(function(p) {
+            var n = parseInt(p, 10);
+            return p !== '' && !isNaN(n) && n >= 0 && n <= 255;
+        });
+    }
+
+    // Attach inline validation — marks field red and shows message on blur
+    function attachValidation(inputId, errId, allowEmpty) {
+        var input = document.getElementById(inputId);
+        var err   = document.getElementById(errId);
+        if (!input || !err) return;
+
+        input.addEventListener('blur', function() {
+            var val = input.value.trim();
+            var empty = val === '';
+            if (allowEmpty && empty) {
+                input.classList.remove('invalid');
+                err.style.display = 'none';
+                return;
+            }
+            var valid = !empty && isValidIP(val);
+            input.classList.toggle('invalid', !valid);
+            err.style.display = valid ? 'none' : 'block';
+        });
+    }
+
+    attachValidation('ip',            'ip-err',     false);
+    attachValidation('subnet',        'subnet-err', false);
+    attachValidation('gateway',       'gateway-err', false);
+    attachValidation('preferred_dns', 'dns1-err',   false);
+    attachValidation('alternate_dns', 'dns2-err',   true);  // optional — blank is fine
+
+    // Block form submission if any IP field is invalid
+    document.getElementById('ip-form').addEventListener('submit', function(e) {
+        var fields = [
+            { id: 'ip',            errId: 'ip-err',      allowEmpty: false },
+            { id: 'subnet',        errId: 'subnet-err',  allowEmpty: false },
+            { id: 'gateway',       errId: 'gateway-err', allowEmpty: false },
+            { id: 'preferred_dns', errId: 'dns1-err',    allowEmpty: false },
+            { id: 'alternate_dns', errId: 'dns2-err',    allowEmpty: true  }
+        ];
+
+        var ok = true;
+        fields.forEach(function(f) {
+            var input = document.getElementById(f.id);
+            var err   = document.getElementById(f.errId);
+            var val   = input.value.trim();
+            var empty = val === '';
+
+            if (f.allowEmpty && empty) return;
+
+            if (empty || !isValidIP(val)) {
+                input.classList.add('invalid');
+                if (err) err.style.display = 'block';
+                ok = false;
+            }
+        });
+
+        if (!ok) e.preventDefault();
+    });
+</script>
 
 </body>
 </html>

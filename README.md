@@ -72,9 +72,9 @@ wifi_switcher/
 ├── app.py                  # Main application — monitor thread + tray icon + Flask UI
 ├── templates/
 │   └── index.html          # Config UI — add/edit SSID profiles
-├── requirements.txt        # Python dependencies
+├── requirements.txt        # Python runtime dependencies
+├── requirements-dev.txt    # Build-only dependencies (PyInstaller)
 ├── WiFiIPSwitcher.iss      # Inno Setup script — builds Windows installer (.exe)
-├── config.json             # Network profiles (auto-created on first run)
 └── wifi_ip_switcher.ico    # System tray icon
 ```
 
@@ -113,33 +113,32 @@ The system tray icon will appear. Open your browser to `http://localhost:5000` t
 
 ## Configuration
 
-Profiles are stored in `config.json` in this format:
+Profiles are stored in `%LOCALAPPDATA%\WiFi_IP_Switcher\wifi_ip_config.json`
+(e.g. `C:\Users\YourName\AppData\Local\WiFi_IP_Switcher\wifi_ip_config.json`).
+
+Any SSID without a saved profile automatically falls back to **DHCP**.
+For static IPs, save a profile via the web UI or edit the JSON directly:
 
 ```json
 {
-  "networks": {
-    "HomeNetwork": {
-      "type": "dhcp"
-    },
     "OfficeWiFi": {
-      "type": "static",
-      "ip": "192.168.1.100",
-      "subnet": "255.255.255.0",
-      "gateway": "192.168.1.1",
-      "dns_primary": "8.8.8.8",
-      "dns_secondary": "8.8.4.4"
+        "ip": "192.168.1.100",
+        "subnet": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "preferred_dns": "8.8.8.8",
+        "alternate_dns": "8.8.4.4"
     },
     "UniversityLab": {
-      "type": "static",
-      "ip": "10.0.1.45",
-      "subnet": "255.255.0.0",
-      "gateway": "10.0.0.1",
-      "dns_primary": "10.0.0.10",
-      "dns_secondary": "10.0.0.11"
+        "ip": "10.0.1.45",
+        "subnet": "255.255.0.0",
+        "gateway": "10.0.0.1",
+        "preferred_dns": "10.0.0.10",
+        "alternate_dns": "10.0.0.11"
     }
-  }
 }
 ```
+
+> **DHCP networks** do not need an entry — any unknown SSID automatically reverts to DHCP.
 
 You can edit this file directly or use the web UI — both work.
 
@@ -168,14 +167,16 @@ The tool starts silently at every login. No console window, no UAC prompt after 
 
 ## Build Standalone Executable
 
-Requires PyInstaller:
+Requires PyInstaller (install from `requirements-dev.txt`):
 
 ```bash
-pip install pyinstaller
+pip install -r requirements-dev.txt
 
-pyinstaller --onefile --windowed --icon=wifi_ip_switcher.ico app.py
-# Output: dist/app.exe
+pyinstaller --windowed --icon=wifi_ip_switcher.ico --add-data "templates;templates" --name app app.py
+# Output: dist/app/   (folder with all files — used by the Inno Setup installer)
 ```
+
+> **Do not use `--onefile`** — the Inno Setup script expects a folder (`dist\app\*`), not a single exe.
 
 To build the full Windows installer (`.exe` setup file) using the included Inno Setup script:
 
